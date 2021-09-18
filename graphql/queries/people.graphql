@@ -1,0 +1,7 @@
+query GetAllPeople {
+  allPeople {
+    people {
+      ...PersonBaseFragment
+    }
+  }
+}

@@ -1,0 +1,34 @@
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+overwrite: true
+schema: 'https://sw-api-graphql.herokuapp.com'
+documents: 'graphql/**/*.graphql'
+generates:
+  __generated_/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - named-operations-object
+  __generated_/schema.json:
+    plugins:
+      - introspection
+  __generated_/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+  __generated_/pages.tsx:
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      reactApolloVersion: 3
+      withHooks: true
+      contextType: 'ApolloClientContext'
+      contextTypeRequired: true
+      apolloClientInstanceImport: '../lib/withApollo'
+    preset: import-types
+    presetConfig:
+      typesPath: ./types
+    plugins:
+      - 'graphql-codegen-apollo-next-ssr'

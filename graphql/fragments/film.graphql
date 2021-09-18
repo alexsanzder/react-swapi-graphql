@@ -1,0 +1,5 @@
+fragment FilmConnectionBaseFragment on Film {
+  id
+  episodeID
+  title
+}

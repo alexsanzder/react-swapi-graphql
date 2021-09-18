@@ -1,7 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from 'next/app';
+import Layout from '@/components/Layout';
+
+import '@/styles/tailwind.css';
+import SearchProvider from '@/context/SearchContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <SearchProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SearchProvider>
+  );
 }
-export default MyApp
+export default MyApp;

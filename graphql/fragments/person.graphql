@@ -1,0 +1,16 @@
+fragment PersonFragment on Person {
+  birthYear
+  eyeColor
+  gender
+  hairColor
+  height
+  mass
+  skinColor
+  filmConnection {
+    edges {
+      node {
+        ...FilmConnectionBaseFragment
+      }
+    }
+  }
+}

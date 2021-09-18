@@ -1,0 +1,11 @@
+fragment PersonBaseFragment on Person {
+  id
+  name
+  homeworld {
+    name
+  }
+  species {
+    id
+    name
+  }
+}
