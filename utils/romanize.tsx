@@ -1,4 +1,6 @@
-export const romanize = (num?: number) => {
+import { Maybe } from '@/__generated_/types';
+
+export const romanize = (num: Maybe<number> | undefined) => {
   let numeral = '';
   const arr = [
     { number: 1, roman: 'I' },

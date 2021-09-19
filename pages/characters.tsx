@@ -12,10 +12,6 @@ import { Person } from '@/__generated_/graphql';
 import { useSearch } from '@/context/SearchContext';
 import Message, { MessageType } from '@/components/Message';
 
-export interface PersonType extends Person {
-  personId: number;
-}
-
 const Characters: PageGetAllPeopleComp = () => {
   const { searchInput } = useSearch();
 
@@ -29,14 +25,12 @@ const Characters: PageGetAllPeopleComp = () => {
     personId: idx + 1,
     ...person,
   }));
-  const [suggestions, setSuggestions] = useState<PersonType[] | undefined>(
-    people
-  );
+  const [suggestions, setSuggestions] = useState<any[] | undefined>(people);
   const getFilteredRows = (
-    characters: PersonType[] | undefined,
+    characters: any[] | undefined,
     filterKey: string
   ) => {
-    return characters?.filter((character: PersonType) => {
+    return characters?.filter((character: any) => {
       return (
         character!.name!.toLowerCase().indexOf(filterKey.toLowerCase()) > -1 ||
         character!
