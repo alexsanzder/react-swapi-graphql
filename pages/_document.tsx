@@ -3,7 +3,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 class MyDocument extends Document {
   render(): JSX.Element {
     return (
-      <Html className="black">
+      <Html className="dark">
         <Head>
           <link
             rel="preload"
