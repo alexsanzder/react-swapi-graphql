@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 
-const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+const Footer = ({ className = 'relative' }: FooterProps) => {
   return (
-    <footer className="relative bottom-0 w-full">
+    <footer className={`bottom-0 w-full ${className}`}>
       <div className="sm:px-4 max-w-6xl px-2 mx-auto">
         <div className="md:py-16 dark:border-gray-800 flex flex-col items-center justify-center -mt-px border-t border-gray-200">
           <div className="flex-shrink-0 mb-8">

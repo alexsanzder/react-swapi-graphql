@@ -184,7 +184,7 @@ const Character: PageGetPersonComp = ({ data }) => {
                       films:
                     </span>
                     <div className="sm:grid-cols-3 sm:gap-x-6 md:gap-y-8 grid items-center justify-center w-full gap-12 pt-4">
-                      {data?.person?.filmConnection?.edges?.map((edge, idx) => (
+                      {data?.person?.filmConnection?.edges?.map((edge) => (
                         <div
                           className="flex flex-col w-48 mx-auto"
                           key={edge?.node?.id}
@@ -193,7 +193,7 @@ const Character: PageGetPersonComp = ({ data }) => {
                             <Image
                               className="object-cover rounded-lg"
                               layout="fill"
-                              src={`/images/films/${idx + 1}.jpg`}
+                              src={`/images/films/${edge?.node?.episodeID}.jpg`}
                               alt={edge!.node!.title as string}
                             />
                           </div>

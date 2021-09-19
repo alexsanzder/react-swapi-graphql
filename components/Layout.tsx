@@ -1,9 +1,11 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 
 const Layout: FC = ({ children }): JSX.Element => {
+  const router = useRouter();
   return (
     <div>
       <Head>
@@ -15,7 +17,9 @@ const Layout: FC = ({ children }): JSX.Element => {
         <div className="flex-grow">
           <Header />
           <main className="">{children}</main>
-          <Footer />
+          <Footer
+            className={router.pathname === '/' ? 'absolute' : 'relative'}
+          />
         </div>
       </div>
     </div>
