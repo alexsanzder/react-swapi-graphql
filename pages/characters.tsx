@@ -106,19 +106,19 @@ const Characters: PageGetAllPeopleComp = () => {
                         </div>
                         <div className="flex flex-col items-center justify-between py-4">
                           <span className="bg-gradient-to-tr from-gray-700 via-gray-800 to-black relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg">
-                            {/* <Image
+                            <Image
                               className="object-cover object-center w-full h-full rounded-full"
                               layout="fill"
                               objectFit="cover"
                               src={`/images/planets/${getPlanetId(
-                                person?.homeworld?.name
+                                person?.homeworld?.name as string
                               )}.jpg`}
                               alt={person?.homeworld?.name as string}
                               placeholder="blur"
                               blurDataURL={`/images/planets/${getPlanetId(
-                                person?.homeworld?.name
+                                person?.homeworld?.name as string
                               )}.jpg`}
-                            /> */}
+                            />
                           </span>
                           <span className="pt-2 text-xs font-bold text-center text-gray-100 uppercase">
                             {person?.homeworld?.name}
