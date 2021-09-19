@@ -8,7 +8,6 @@ import {
   ssrGetAllPlanets,
 } from '@/__generated_/pages';
 import { withApollo } from '@/lib/withApollo';
-import { Person } from '@/__generated_/graphql';
 import { useSearch } from '@/context/SearchContext';
 import Message, { MessageType } from '@/components/Message';
 
@@ -45,13 +44,19 @@ const Characters: PageGetAllPeopleComp = () => {
     setSuggestions(suggest);
   }, [searchInput]);
 
-  const getPlanetId = (name: string) =>
-    planets
+  const getPlanetImage = (name: string) => {
+    const worlds = planets
       ?.filter(
         (planet) =>
           planet?.name?.toLocaleLowerCase() === name.toLocaleLowerCase()
       )
-      .map((p) => p.id as number);
+      .map((p) => p.id);
+
+    if (typeof worlds !== 'undefined' && worlds[0] < 20) {
+      return `/images/planets/${worlds[0]}.jpg`;
+    }
+    return '';
+  };
 
   return (
     <section className="mt-32">
@@ -106,19 +111,23 @@ const Characters: PageGetAllPeopleComp = () => {
                         </div>
                         <div className="flex flex-col items-center justify-between py-4">
                           <span className="bg-gradient-to-tr from-gray-700 via-gray-800 to-black relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg">
-                            <Image
-                              className="object-cover object-center w-full h-full rounded-full"
-                              layout="fill"
-                              objectFit="cover"
-                              src={`/images/planets/${getPlanetId(
-                                person?.homeworld?.name as string
-                              )}.jpg`}
-                              alt={person?.homeworld?.name as string}
-                              placeholder="blur"
-                              blurDataURL={`/images/planets/${getPlanetId(
-                                person?.homeworld?.name as string
-                              )}.jpg`}
-                            />
+                            {getPlanetImage(
+                              person?.homeworld?.name as string
+                            ) ? (
+                              <Image
+                                className="object-cover object-center w-full h-full rounded-full"
+                                layout="fill"
+                                objectFit="cover"
+                                src={getPlanetImage(
+                                  person?.homeworld?.name as string
+                                )}
+                                alt={person?.homeworld?.name as string}
+                                placeholder="blur"
+                                blurDataURL={getPlanetImage(
+                                  person?.homeworld?.name as string
+                                )}
+                              />
+                            ) : null}
                           </span>
                           <span className="pt-2 text-xs font-bold text-center text-gray-100 uppercase">
                             {person?.homeworld?.name}

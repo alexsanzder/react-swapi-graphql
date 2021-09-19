@@ -19,16 +19,19 @@ const Character: PageGetPersonComp = ({ data }) => {
     return { id: idx + 1, name: planet?.name };
   });
 
-  const planetID =
-    typeof planets !== 'undefined'
-      ? planets!
-          .filter(
-            (planet) =>
-              planet!.name!.toLocaleLowerCase() ===
-              data?.person!.homeworld!.name!.toLocaleLowerCase()
-          )
-          .map((p) => '' + p.id)
-      : '';
+  const getPlanetImage = (name: string) => {
+    const worlds = planets
+      ?.filter(
+        (planet) =>
+          planet?.name?.toLocaleLowerCase() === name.toLocaleLowerCase()
+      )
+      .map((p) => p.id);
+
+    if (typeof worlds !== 'undefined' && worlds[0] < 20) {
+      return `/images/planets/${worlds[0]}.jpg`;
+    }
+    return '';
+  };
 
   return (
     <section className="relative mt-32 overflow-y-auto">
@@ -82,19 +85,23 @@ const Character: PageGetPersonComp = ({ data }) => {
                         </span>
                         <div className="flex flex-col items-center justify-between">
                           <span className="bg-gradient-to-tr from-gray-700 via-gray-800 to-black relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg">
-                            <Image
-                              className="object-cover object-center w-full h-full rounded-full"
-                              layout="fill"
-                              objectFit="cover"
-                              src={`/images/planets/${
-                                planetID![0] as string
-                              }.jpg`}
-                              alt={data!.person!.homeworld!.name as string}
-                              placeholder="blur"
-                              blurDataURL={`/images/planets/${
-                                planetID![0] as string
-                              }.jpg`}
-                            />
+                            {getPlanetImage(
+                              data?.person?.homeworld?.name as string
+                            ) ? (
+                              <Image
+                                className="object-cover object-center w-full h-full rounded-full"
+                                layout="fill"
+                                objectFit="cover"
+                                src={getPlanetImage(
+                                  data?.person?.homeworld?.name as string
+                                )}
+                                alt={data?.person?.homeworld?.name as string}
+                                placeholder="blur"
+                                blurDataURL={getPlanetImage(
+                                  data?.person?.homeworld?.name as string
+                                )}
+                              />
+                            ) : null}
                           </span>
                           <span className="py-4 pt-2 text-xs font-bold text-gray-100 uppercase">
                             {data?.person?.homeworld?.name}
