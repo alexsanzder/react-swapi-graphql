@@ -13,18 +13,22 @@ import Message, { MessageType } from '@/components/Message';
 
 const Character: PageGetPersonComp = ({ data }) => {
   const router = useRouter();
+
   const { data: planetData } = ssrGetAllPlanets.usePage();
   const planets = planetData?.allPlanets?.planets?.map((planet, idx) => {
     return { id: idx + 1, name: planet?.name };
   });
 
-  const planetID = planets
-    ?.filter(
-      (planet) =>
-        planet?.name?.toLocaleLowerCase() ===
-        data?.person?.homeworld?.name?.toLocaleLowerCase()
-    )
-    .map((p) => p.id as number);
+  const planetID =
+    typeof planets !== 'undefined'
+      ? planets!
+          .filter(
+            (planet) =>
+              planet!.name!.toLocaleLowerCase() ===
+              data?.person!.homeworld!.name!.toLocaleLowerCase()
+          )
+          .map((p) => '' + p.id)
+      : '';
 
   return (
     <section className="relative mt-32 overflow-y-auto">
@@ -52,7 +56,7 @@ const Character: PageGetPersonComp = ({ data }) => {
                 </svg>
                 <span className="ml-1">Back</span>
               </button>
-              {data ? (
+              {data?.person ? (
                 <div className="flex flex-col flex-1 w-full space-y-10">
                   <div className="flex flex-1 w-full border border-gray-800 rounded-lg">
                     <div className="relative w-1/3">
@@ -61,10 +65,14 @@ const Character: PageGetPersonComp = ({ data }) => {
                         layout="responsive"
                         width={410}
                         height={520}
-                        src={`/images/people/${router.query.person}.jpg`}
+                        src={`/images/people/${
+                          router.query.person as string
+                        }.jpg`}
                         alt={data?.person?.name as string}
                         placeholder="blur"
-                        blurDataURL={`/images/people/${router.query.person}.jpg`}
+                        blurDataURL={`/images/people/${
+                          router.query.person as string
+                        }.jpg`}
                       />
                     </div>
                     <div className="flex flex-col items-center justify-center flex-1 px-10 py-4">
@@ -74,17 +82,19 @@ const Character: PageGetPersonComp = ({ data }) => {
                         </span>
                         <div className="flex flex-col items-center justify-between">
                           <span className="bg-gradient-to-tr from-gray-700 via-gray-800 to-black relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg">
-                            {planetID?.length && planetID[0] < 20 ? (
-                              <Image
-                                className="object-cover object-center w-full h-full rounded-full"
-                                layout="fill"
-                                objectFit="cover"
-                                src={`/images/planets/${planetID}.jpg`}
-                                alt={data?.person?.homeworld?.name as string}
-                                placeholder="blur"
-                                blurDataURL={`/images/planets/${planetID}.jpg`}
-                              />
-                            ) : null}
+                            <Image
+                              className="object-cover object-center w-full h-full rounded-full"
+                              layout="fill"
+                              objectFit="cover"
+                              src={`/images/planets/${
+                                planetID![0] as string
+                              }.jpg`}
+                              alt={data!.person!.homeworld!.name as string}
+                              placeholder="blur"
+                              blurDataURL={`/images/planets/${
+                                planetID![0] as string
+                              }.jpg`}
+                            />
                           </span>
                           <span className="py-4 pt-2 text-xs font-bold text-gray-100 uppercase">
                             {data?.person?.homeworld?.name}
@@ -177,6 +187,7 @@ const Character: PageGetPersonComp = ({ data }) => {
                               className="object-cover rounded-lg"
                               layout="fill"
                               src={`/images/films/${idx + 1}.jpg`}
+                              alt={edge!.node!.title as string}
                             />
                           </div>
                           <div className="flex flex-col py-4 text-center">
@@ -207,9 +218,8 @@ const Character: PageGetPersonComp = ({ data }) => {
 };
 
 export const getStaticProps: GetServerSideProps = async ({ params, req }) => {
-  console.log(params);
   const res = await ssrGetPerson.getServerPage(
-    { variables: { id: params?.id?.toString() || '' } },
+    { variables: { id: params!.id!.toString() || '' } },
     { req }
   );
 
@@ -218,7 +228,7 @@ export const getStaticProps: GetServerSideProps = async ({ params, req }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { id: '', person: '' } }],
+    paths: [{ params: { id: 'cGVvcGxlOjE=' } }],
     fallback: true,
   };
 };

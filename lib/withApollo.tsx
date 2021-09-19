@@ -19,10 +19,10 @@ export type ApolloClientContext = {
   };
 };
 
-export const withApollo = (Comp: NextPage) => (props: any) => {
+export const withApollo = (Component: NextPage) => (props: any) => {
   return (
     <ApolloProvider client={getApolloClient(undefined, props.apolloState)}>
-      <Comp />
+      <Component />
     </ApolloProvider>
   );
 };

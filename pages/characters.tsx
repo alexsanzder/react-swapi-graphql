@@ -78,10 +78,14 @@ const Characters: PageGetAllPeopleComp = () => {
                             layout="responsive"
                             width={410}
                             height={520}
-                            src={`/images/people/${person.personId}.jpg`}
-                            alt={person?.name as string}
+                            src={`/images/people/${
+                              person!.personId as string
+                            }.jpg`}
+                            alt={person!.name as string}
                             placeholder="blur"
-                            blurDataURL={`/images/people/${person.personId}.jpg`}
+                            blurDataURL={`/images/people/${
+                              person!.personId as string
+                            }.jpg`}
                           />
                         </a>
                       </Link>
@@ -102,7 +106,7 @@ const Characters: PageGetAllPeopleComp = () => {
                         </div>
                         <div className="flex flex-col items-center justify-between py-4">
                           <span className="bg-gradient-to-tr from-gray-700 via-gray-800 to-black relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg">
-                            <Image
+                            {/* <Image
                               className="object-cover object-center w-full h-full rounded-full"
                               layout="fill"
                               objectFit="cover"
@@ -114,7 +118,7 @@ const Characters: PageGetAllPeopleComp = () => {
                               blurDataURL={`/images/planets/${getPlanetId(
                                 person?.homeworld?.name
                               )}.jpg`}
-                            />
+                            /> */}
                           </span>
                           <span className="pt-2 text-xs font-bold text-center text-gray-100 uppercase">
                             {person?.homeworld?.name}
