@@ -16,8 +16,6 @@ const Home: NextPage = (): JSX.Element => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    nextArrow: '',
-    prevArrow: '',
   };
   return (
     <Slider className="h-screen overflow-y-hidden" {...settings}>
