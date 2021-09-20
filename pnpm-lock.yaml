@@ -12,6 +12,7 @@ specifiers:
   '@graphql-codegen/typescript-graphql-files-modules': 2.1.0
   '@graphql-codegen/typescript-operations': 2.1.4
   '@graphql-codegen/typescript-react-apollo': 3.1.4
+  '@n8tb1t/use-scroll-position': ^2.0.3
   '@testing-library/cypress': ^8.0.1
   '@testing-library/jest-dom': ^5.14.1
   '@testing-library/react': ^12.1.0
@@ -44,6 +45,7 @@ specifiers:
 
 dependencies:
   '@apollo/client': 3.4.11_graphql@15.5.3+react@17.0.2
+  '@n8tb1t/use-scroll-position': 2.0.3_6e44cfea672f844fe365824ce49901bd
   graphql: 15.5.3
   next: 11.1.2_bd7797d63db473de6e2318609a63c933
   react: 17.0.2
@@ -1779,6 +1781,16 @@ packages:
     dependencies:
       graphql: 15.5.3
     dev: true
+
+  /@n8tb1t/use-scroll-position/2.0.3_6e44cfea672f844fe365824ce49901bd:
+    resolution: {integrity: sha512-6GO4FHVJTMI4jbRHborzemuL6B319qh2cVLOLj8DApJhjyT71eLgANbQ4bNKSZ51zBm3uJ3WmqnyNF17eSsDyw==}
+    peerDependencies:
+      '@types/react': '*'
+      react: '*'
+    dependencies:
+      '@types/react': 17.0.20
+      react: 17.0.2
+    dev: false
 
   /@napi-rs/triples/1.0.3:
     resolution: {integrity: sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==}

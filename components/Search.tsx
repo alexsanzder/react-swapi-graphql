@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useSearch } from '@/context/SearchContext';
+import { useRouter } from 'next/router';
 
 const Search = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -7,11 +8,13 @@ const Search = () => {
 
   const { setSearchInput: setSearchType } = useSearch();
 
+  const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value && value !== '') {
       setInputValue(value);
       setSearchType(value);
+      router.push('/characters');
     } else onClear();
   };
 

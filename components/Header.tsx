@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Search from './Search';
 import { useRouter } from 'next/router';
 import { useHistory } from '@/context/HistoryContext';
+import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 
 const Header = () => {
   const router = useRouter();
   const { history } = useHistory();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  useScrollPosition(
+    ({ currPos }) => {
+      setIsScrolled(currPos.y >= 80);
+    },
+    [isScrolled],
+    undefined,
+    true,
+    100
+  );
+
   return (
-    <header className="absolute z-30 w-full">
+    <header
+      className={`z-50 w-full ${
+        isScrolled ? 'fixed bg-black shadow-xl' : 'absolute bg-transparent'
+      }`}
+    >
       <div className="sm:px-6 max-w-6xl px-4 mx-auto">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0 mr-5">
@@ -53,13 +70,15 @@ const Header = () => {
               </nav>
             </>
           ) : null}
-          <div className="flex flex-wrap items-center justify-end">
-            <Link href="/characters">
-              <a className="hover:bg-yellow-400 hover:text-black px-6 py-3 ml-6 text-yellow-400 border border-yellow-400 rounded-lg">
-                Explore Characters
-              </a>
-            </Link>
-          </div>
+          {router.pathname !== '/characters' ? (
+            <div className="flex flex-wrap items-center justify-end">
+              <Link href="/characters">
+                <a className="hover:bg-yellow-400 hover:text-black px-6 py-3 ml-6 text-yellow-400 border border-yellow-400 rounded-lg">
+                  Explore Characters
+                </a>
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
     </header>
