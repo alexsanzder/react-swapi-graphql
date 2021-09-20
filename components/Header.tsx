@@ -1,8 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Search from './Search';
+import { useRouter } from 'next/router';
+import { useHistory } from '@/context/HistoryContext';
 
 const Header = () => {
+  const router = useRouter();
+  const { history } = useHistory();
   return (
     <header className="absolute z-30 w-full">
       <div className="sm:px-6 max-w-6xl px-4 mx-auto">
@@ -27,34 +31,28 @@ const Header = () => {
               </a>
             </Link>
           </div>
-          <div className="flex flex-1 px-6">
-            <Search />
-          </div>
-          <nav className="flex flex-wrap justify-end">
-            <ul className="flex flex-wrap items-center flex-grow font-medium">
-              <li>
-                <Link href="/character/cGVvcGxlOjE=?person=1">
-                  <a className="hover:text-black dark:text-yellow-400 dark:hover:text-gray-100 flex items-center px-4 py-2 text-gray-600 transition duration-150 ease-in-out">
-                    Luke Skywalker
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/character/cGVvcGxlOjQ=?person=4">
-                  <a className="hover:text-black dark:text-yellow-400 dark:hover:text-gray-100 flex items-center px-4 py-2 text-gray-600 transition duration-150 ease-in-out">
-                    Darth Vader
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/character/cGVvcGxlOjIw?person=19">
-                  <a className="hover:text-black dark:text-yellow-400 dark:hover:text-gray-100 flex items-center px-4 py-2 text-gray-600 transition duration-150 ease-in-out">
-                    Yoda
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {router.pathname !== '/' ? (
+            <>
+              <div className="flex flex-1 px-6">
+                <Search />
+              </div>
+              <nav className="flex flex-wrap justify-end">
+                <ul className="flex flex-wrap items-center flex-grow font-medium">
+                  {history?.length
+                    ? history.map((character) => (
+                        <li key={character.name}>
+                          <Link href={character.url}>
+                            <a className="hover:text-black dark:text-yellow-400 dark:hover:text-gray-100 flex items-center px-4 py-2 text-gray-600 transition duration-150 ease-in-out">
+                              {character.name}
+                            </a>
+                          </Link>
+                        </li>
+                      ))
+                    : null}
+                </ul>
+              </nav>
+            </>
+          ) : null}
           <div className="flex flex-wrap items-center justify-end">
             <Link href="/characters">
               <a className="hover:bg-yellow-400 hover:text-black px-6 py-3 ml-6 text-yellow-400 border border-yellow-400 rounded-lg">

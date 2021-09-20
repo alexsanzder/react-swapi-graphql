@@ -19,12 +19,10 @@ interface PropsType {
 const SearchContext = createContext({} as SearchInterface);
 
 export default function SearchProvider(props: PropsType) {
-  const [searchType, setSearchType] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   return (
-    <SearchContext.Provider
-      value={{ searchInput: searchType, setSearchInput: setSearchType }}
-    >
+    <SearchContext.Provider value={{ searchInput, setSearchInput }}>
       {props.children}
     </SearchContext.Provider>
   );

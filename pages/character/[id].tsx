@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { GetServerSideProps, GetStaticPaths } from 'next';
@@ -10,11 +10,28 @@ import {
 import { withApollo } from '@/lib/withApollo';
 import { romanize } from '@/utils/romanize';
 import Message, { MessageType } from '@/components/Message';
+import { useHistory } from '@/context/HistoryContext';
 
 const Character: PageGetPersonComp = ({ data }) => {
   const router = useRouter();
-
   const { data: planetData } = ssrGetAllPlanets.usePage();
+  const { history, setHistory } = useHistory();
+
+  useEffect(() => {
+    if (history && data) {
+      const filtered = history.filter(
+        (item) => item.name !== data!.person!.name
+      );
+      filtered.length >= 3 && filtered.shift();
+      const newHistory = [
+        ...filtered,
+        { url: router.asPath, name: data!.person!.name as string },
+      ];
+
+      setHistory(newHistory);
+    }
+  }, [data]);
+
   const planets = planetData?.allPlanets?.planets?.map((planet, idx) => {
     return { id: idx + 1, name: planet?.name };
   });

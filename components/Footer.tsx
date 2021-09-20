@@ -1,14 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface FooterProps {
   className?: string;
 }
 const Footer = ({ className = 'relative' }: FooterProps) => {
+  const router = useRouter();
+
   return (
     <footer className={`bottom-0 w-full ${className}`}>
       <div className="sm:px-4 max-w-6xl px-2 mx-auto">
-        <div className="md:py-16 dark:border-gray-800 flex flex-col items-center justify-center -mt-px border-t border-gray-200">
+        <div
+          className={`md:py-16 flex flex-col items-center justify-center -mt-px border-gray-800 ${
+            router.pathname !== '/' ? 'border-t ' : 'border-0 text-yellow-400'
+          }`}
+        >
           <div className="flex-shrink-0 mb-8">
             <Link href="/" aria-label="Star Wars">
               <a className="block">
@@ -29,7 +36,7 @@ const Footer = ({ className = 'relative' }: FooterProps) => {
               </a>
             </Link>
           </div>
-          <div className="dark:text-gray-600 text-sm text-gray-400">
+          <div className="text-sm">
             &copy;
             {` ${new Date().getFullYear()} Lucas Films. All rights reserved.`}
           </div>
