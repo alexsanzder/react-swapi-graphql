@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps, GetStaticPaths } from 'next';
 import {
   PageGetPersonComp,
+  ssrGetAllPeople,
   ssrGetAllPlanets,
   ssrGetPerson,
 } from '@/__generated_/pages';
@@ -11,6 +12,7 @@ import { withApollo } from '@/lib/withApollo';
 import { romanize } from '@/utils/romanize';
 import Message, { MessageType } from '@/components/Message';
 import { useHistory } from '@/context/HistoryContext';
+import { useGetAllPeopleQuery } from '@/__generated_/graphql';
 
 const Character: PageGetPersonComp = ({ data }) => {
   const router = useRouter();
@@ -241,6 +243,18 @@ const Character: PageGetPersonComp = ({ data }) => {
   );
 };
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { props } = await ssrGetAllPeople.getServerPage({}, { req: undefined });
+  const paths =
+    props!.data!.allPeople!.people!.map((person) => ({
+      params: { id: person?.id },
+    })) || [];
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
 export const getStaticProps: GetServerSideProps = async ({ params, req }) => {
   const res = await ssrGetPerson.getServerPage(
     { variables: { id: params!.id!.toString() || '' } },
@@ -248,13 +262,6 @@ export const getStaticProps: GetServerSideProps = async ({ params, req }) => {
   );
 
   return res;
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [{ params: { id: 'cGVvcGxlOjE=' } }],
-    fallback: true,
-  };
 };
 
 export default withApollo(
